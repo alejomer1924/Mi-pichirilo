@@ -2,6 +2,8 @@ const poolConnection = require('../db/database');
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken'); 
+const bcrypt = require('bcrypt');
+
 
 // DECLARE JWT-secret
 const JWT_Secret = 'sumamentesecreta';
@@ -26,10 +28,8 @@ router.post('/login', (req, res) => {
             let existe = false; 
             for (let row of rows){
                 if(usuario.correo === row.correo && usuario.contrasena === row.contrasena){
-                    console.log('existe en la bd'); 
                     var token =  jwt.sign(usuario, JWT_Secret); 
                     existe = true; 
-
                     break; 
                 }
             } 
@@ -40,6 +40,7 @@ router.post('/login', (req, res) => {
                 })
             }else{
                 res.json({
+                    existe: existe,
                     mensaje: 'No existe en la bd'
                 }); 
             }
@@ -48,9 +49,6 @@ router.post('/login', (req, res) => {
         });
     })
 });
-
-
-
 
 module.exports = router;
 
