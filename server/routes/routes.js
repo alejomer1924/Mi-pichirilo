@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 // DECLARE JWT-secret
 const JWT_Secret = 'sumamentesecreta';
 
-router.get('/', (req, res) => {
+/* router.get('/', (req, res) => {
     poolConnection.getConnection((err, connection) => {
         connection.query('SELECT correo, contrasena FROM blh7gemxzxusiyohygpd.Propietario', (err, rows, fields) => {
             if (!err) {
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
             connection.release();
         });
     })
-});
+}); */
 
 router.post('/login', (req, res) => {
     poolConnection.getConnection((err, connection) => {
