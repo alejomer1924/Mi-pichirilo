@@ -1,0 +1,40 @@
+<body>
+    <div id="login">
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" action="" method="post">
+                            <h3 class="text-center text-dark">Ingresar a la plataforma</h3>
+                            <div class="form-group">
+                                <label for="username" class="text-dark">Correo:</label><br>
+                                <input type="text" class="form-control" #correo>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-dark">Contraseña:</label><br>
+                                <input type="password" class="form-control mr-sm-2" (keyup.enter) = 'autenticacion(correo.value, contra.value)' #contra>
+                            </div>
+                            <div *ngIf='intento'>
+                                <div *ngIf='logeado == true'>
+                                    <p class="logeado-exito">
+                                        Logeado con exito
+                                    </p>
+                                </div>
+                                <div *ngIf='logeado == false'>
+                                    <p class="logeado-fracaso">
+                                        No se ha encontrado el correo o contraseña 
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-outline-success my-2 my-sm-0" (click) = 'autenticacion(correo.value, contra.value); intento = true'> Ingresar </button>
+                                <br><br>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>

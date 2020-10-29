@@ -25,6 +25,7 @@ router.post('/login', (req, res) => {
     poolConnection.getConnection((err, connection) => {
         connection.query('SELECT correo, contrasena FROM blh7gemxzxusiyohygpd.Propietario', (err, rows, fields) => {
             let usuario = req.body; 
+            console.log(usuario);
             let existe = false; 
             for (let row of rows){
                 if(usuario.correo === row.correo && usuario.contrasena === row.contrasena){
