@@ -1,0 +1,36 @@
+<div class="mt-5 container signup">
+    <h3 class="text-center text-dark">Registro de la plataforma</h3>
+    <form>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputAddress">Nombre</label>
+                <input type="text" class="form-control" #nombre  required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputAddress2">Doc. Identidad</label>
+                <input type="number" class="form-control" #doc placeholder="TI, CC" required>
+              </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputEmail4">Celular</label>
+            <input type="number" class="form-control" #cel required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">Correo</label>
+            <input type="email" class="form-control" #correo required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputCity">Contraseña</label>
+            <input type="password" class="form-control" #contra required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputCity">Confirmar contraseña</label>
+            <input type="password" class="form-control" #RContra required>
+          </div>
+        </div>
+        <button class="btn btn-outline-success my-2 my-sm-0" (click)= 'registrarPropietario(doc.value,nombre.value,cel.value,correo.value,contra.value,RContra.value)'>Registro</button>
+      </form>
+</div>
