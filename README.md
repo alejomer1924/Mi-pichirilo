@@ -6,4 +6,4 @@ to run server:
 
 to run front: 
 
-2. cd pichirilo -> ng serve -o 
+2. cd pichirilo -> npm install -> ng serve -o 
