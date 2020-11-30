@@ -1,0 +1,60 @@
+<form class="container mt-5 abajo">
+    <h3> Formulario ingreso de vehículo</h3>
+    <h5>Datos del vehiculo</h5>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Matricula</label>
+            <input type="text" class="form-control" #matricula>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputState">Tipo</label>
+            <select id="inputState" class="form-control" #tipo>
+                <option *ngFor="let tipo of tipos">{{tipo}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Marca</label>
+            <input type="text" class="form-control" #marca>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Modelo</label>
+            <input type="text" class="form-control" #modelo>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Color</label>
+            <input type="text" class="form-control" #color>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Kilometraje</label>
+            <input type="number" class="form-control" #kilometraje>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Descripcion</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" #descripcion></textarea>
+    </div>
+    <h5>Datos de reparación</h5>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Fecha ingreso</label>
+            <input type="datetime-local" class="form-control" #fechaIngr>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Fecha salida</label>
+            <input type="datetime-local" class="form-control" #fechaSal>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Motivo</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" #motivo></textarea>
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Detalles</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" #detalles></textarea>
+    </div>
+    <button type="submit" class="btn btn-outline-success my-2 my-sm-0" (click)='registrarRep(matricula.value, tipo.value, marca.value, modelo.value, 
+                color.value, kilometraje.value, descripcion.value, fechaIngr.value,
+                    fechaSal.value,motivo.value,detalles.value)'>Registrar reparación</button>
+</form>

@@ -31,3 +31,29 @@ body {
 .distancia{
     margin-right: 20px;
 }
+
+.abajo{
+  padding-bottom: 40px;
+}
+
+.signup{
+  margin-top: 120px;
+  max-width: 600px;
+  height: 380px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+  padding: 20px;
+}
+
+.signupVehicle{
+  margin-top: 220px;
+  max-width: 600px;
+  height: 500px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+  padding: 20px;
+}
+
+.derecha{
+  text-align: right;
+}

@@ -1,0 +1,19 @@
+<form class="container mt-5">
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="inputState">Estado</label>
+        <select id="inputState" class="form-control" #tipo>
+            <option *ngFor="let estado of estados">{{estado}}</option>
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="inputEmail4">Fecha salida</label>
+        <input type="datetime-local" class="form-control" #fechaSal>
+    </div>
+</div>
+<div class="form-group">
+    <label for="exampleFormControlTextarea1">Detalles</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value = "algo" #detalles></textarea>
+</div>
+<button type="submit" (click) ="updateRepair(tipo.value, fechaSal.value, detalles.value)" class="btn btn-outline-success my-2 my-sm-0"> Actualizar reparación </button>
+</form>

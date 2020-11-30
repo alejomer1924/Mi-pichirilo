@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router'
+import {Router, ActivatedRoute} from '@angular/router'
 
 @Component({
   selector: 'app-navbar',
@@ -10,11 +10,18 @@ export class NavbarComponent implements OnInit {
 
   constructor(private _router: Router) { }
 
+  rol:string 
+
   ngOnInit(): void {
+    
   }
 
   toLogin(){
     this._router.navigate(['login']);
+  }
+
+  toSignUp(){
+    this._router.navigate(['signUp']);
   }
 
 }
