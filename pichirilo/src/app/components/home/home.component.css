@@ -1,0 +1,43 @@
+#slogan{
+    
+display: flex;
+justify-content: space-between;
+padding: 0 120px;
+align-items: center;
+margin-top: 50px;
+}
+#slogan h1{
+    width: 50%;
+    font-size: 50px;
+}
+#slogan img{
+    width: 500;
+}
+strong{
+    color: #F0CE4A;
+}
+#cara{
+  display: flex;  
+  justify-content: space-around;
+}
+.card{
+    height: 300px;
+width: 230px;
+
+    border-radius: 0 0 30px 0;
+     display: flex;
+    justify-content: space-between;
+    padding: 1%;
+}
+#c1{
+background: #FB4C5C;
+}
+#c2{
+background: #F0CE4A;
+}
+#c3{
+background: #4AC47C;
+}
+#c4{
+background: #5AA5CF;
+}
