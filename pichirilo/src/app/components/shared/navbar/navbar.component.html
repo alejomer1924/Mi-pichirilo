@@ -1,30 +1,26 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Mi pichirilo</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link distancia" [routerLink] = '["home"]'>Inicio <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link distancia" href="#">Servicios</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Ingreso
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" routerLink='login/Propietario'>Propietario</a>
-            <a class="dropdown-item" routerLink= 'login/Empleado' >Empleado</a>
-            <div class="dropdown-divider"></div>
-          </div>
-        </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click) = 'toSignUp()'>Registrarse</button>
-      </form>
-    </div>
-  </nav>
+<nav>
+  <div>
+    <a class="navbar-brand" href="#"><img src="../../../../assets/images/escarabajo.png" alt="imagen de pichirilo"
+        width="60">Mi pichirilo</a>
+  </div>
+  <div id="menu">
+    <ul>
+      <li> <a routerLink='/home'>Inicio</a></li>
+      <li> <a>Servicios</a></li>
+      <li class="nav-item dropdown" id="menusito">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">Ingreso</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink='login/Propietario'>Propietario</a>
+          <a class="dropdown-item" routerLink='login/Empleado'>Empleado</a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+      <li id="registro" class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)='toSignUp()'> <a>Registro</a>
+      </li>
+
+
+
+    </ul>
+  </div>
+</nav>
