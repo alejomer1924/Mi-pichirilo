@@ -9,7 +9,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  logeado = false;
+  flag:boolean;
   intento = false;
   rol:string;
 
@@ -22,19 +22,19 @@ export class LoginComponent implements OnInit {
   }
 
   autenticacion(correo: string, contrasena: string) {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
     let usuario = {
       correo,
       contrasena,
       rol: this.rol 
     }
-    this._userService.login(JSON.stringify(usuario), headers).subscribe((data) => {
+    this._userService.login(JSON.stringify(usuario)).subscribe((data) => {
       if (data.existe) {
-        this.logeado = true
+        this.flag = true;
         this._route.navigate(["services/"+this.rol]);
         localStorage.setItem('token', data.token);
+      }else{
+        this.flag = false;
       }
     });
-
   }
 }

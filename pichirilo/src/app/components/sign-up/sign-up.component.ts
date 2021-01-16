@@ -35,8 +35,7 @@ export class SignUpComponent implements OnInit {
         RContrasena
       }
       console.log(propietario);
-      let headers = new HttpHeaders().set('Content-Type', 'application/json');
-      this._userService.signUp(JSON.stringify(propietario), headers).subscribe((data) => {
+      this._userService.signUp(JSON.stringify(propietario)).subscribe((data) => {
         if(data.mensaje == 'Agregado exitosamente'){
           alert('Agregado exitosamente'); 
         }else{

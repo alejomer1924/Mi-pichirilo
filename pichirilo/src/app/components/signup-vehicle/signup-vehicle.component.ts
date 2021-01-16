@@ -20,12 +20,6 @@ export class SignupVehicleComponent implements OnInit {
   registrarRep(matricula: string, tipo: string, marca: string, modelo: string,
     color: string, kilometraje: string, descripcion: string,
     fechaIngr: string, fechaSal: string, motivo: string, detalles: string) {
-      
-    let token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json', 
-      'Authorization': `Bearer ${token}`
-    });
 
     let registroRep = {
       vehiculo: {
@@ -45,11 +39,13 @@ export class SignupVehicleComponent implements OnInit {
       }
     }
     console.log(registroRep);
-    this._userService.signUpRepair(registroRep, headers).subscribe((data:any)=>{
+    this._userService.signUpRepair(registroRep).subscribe((data:any)=>{
         console.log(data);
+        this._router.navigate(['services/Empleado']);
     });
+    console.log(this._userService.reparaciones);
 
-    this._router.navigate(['services/Empleado']);
+    
   }
 
 }

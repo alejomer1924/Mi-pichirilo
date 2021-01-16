@@ -10,20 +10,11 @@ import {Router} from '@angular/router'
 })
 export class ListRepairsComponent implements OnInit {
 
-  reparaciones:any[] = []; 
-  token = localStorage.getItem('token');
-  headers = new HttpHeaders({
-    'Content-Type': 'application/json', 
-    'Authorization': `Bearer ${this.token}`
-  });
-
-  constructor(private _userService:UserService, private _router:Router) { }
+  constructor(public _userService:UserService, private _router:Router) { }
 
   ngOnInit(): void {
-    this._userService.listRepairs(this.headers).subscribe((data:any)=>{
-      this.reparaciones = data.items
-      console.log(this.reparaciones);
-    });
+    this._userService.listRepairs();
+    console.log('on init');
   }
 
   toSignUpVehichle(){
@@ -35,8 +26,9 @@ export class ListRepairsComponent implements OnInit {
   }
 
   deleteVehicle(idRep:string, matr:string){
-    this._userService.deleteRepair(idRep,matr, this.headers).subscribe((data)=>{
+    this._userService.deleteRepair(idRep, matr).subscribe((data)=>{
       console.log(data);
+      this._userService.updateListRepairs();
     });
   }
 

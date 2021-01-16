@@ -1,6 +1,6 @@
 <h3 class="mt-5">Reparaciones actuales</h3>
 <ul class="list-group list-group-flush mt-5">
-    <li *ngFor="let reparacion of reparaciones" class="list-group-item d-flex">
+    <li *ngFor="let reparacion of _userService.reparaciones" class="list-group-item d-flex">
         {{reparacion.Vehiculo_matricula}} - {{reparacion.fecha_llegada}} - {{reparacion.motivo}} - {{reparacion.nombre}}
         <div class="ml-auto">
             <button (click) = "toUpdateVehicle(reparacion.id_reparacion)" class="btn btn-outline-success my-2 my-sm-0 distancia ml-auto">

@@ -32,16 +32,27 @@ router.post('/login', (req, res) => {
         } else {
             id = 'id_propietario';
         }
-        connection.query(`SELECT ${id} AS id, correo, contrasena FROM blh7gemxzxusiyohygpd.${rolBD}`, (err, rows, fields) => {
+        connection.query(`SELECT ${id} AS id, correo, contrasena FROM blh7gemxzxusiyohygpd.${rolBD}`, async (err, rows, fields) => {
             let existe = false;
+            let token;
             for (let row of rows) {
-                if (usuario.correo === row.correo && usuario.contrasena === row.contrasena) {
-                    var token = jwt.sign({ id: row.id }, JWT_Secret, { expiresIn: '8h' });
-                    existe = true;
+                if (usuario.correo === row.correo) {
+                    console.log('entra, correo existente');
+                    await bcrypt.compare(usuario.contrasena, row.contrasena).then(same => {
+                        if(same === true){
+                            console.log('entra, contraseña correcta');
+                            token = jwt.sign({ id: row.id }, JWT_Secret, { expiresIn: '8h' });
+                            existe = true;
+                        }
+                    });  
+                }
+                if(existe){
                     break;
                 }
             }
+            console.log(existe);
             if (existe) {
+                console.log('asdasdsadadsadas');
                 res.json({
                     existe: existe,
                     token: token
@@ -52,19 +63,28 @@ router.post('/login', (req, res) => {
                     mensaje: 'No existe en la bd'
                 });
             }
-
             connection.release();
         });
     })
 });
 
 
-router.post('/agregarPropietario', (req, res) => {
+router.post('/agregarPropietario', async (req, res) => {
     let propietario = req.body;
+    let encryptedPassword; 
+    await bcrypt.hash(propietario.contrasena, 10).then((hash)=> {
+        encryptedPassword = hash;
+    }); 
+
+    /* bcrypt.compare('manu123', encryptedPassword, (err, same) => {
+        console.log(same);
+    }); */
+
     poolConnection.getConnection((err, connection) => {
         connection.query('INSERT INTO blh7gemxzxusiyohygpd.Propietario (id_propietario, nombre, celular, correo, contrasena, Estado_id_estado) VALUES (?,?,?,?,?,?)',
-            [propietario.id_propietario, propietario.nombre, propietario.celular, propietario.correo, propietario.contrasena, 1], (err, result) => {
+            [propietario.id_propietario, propietario.nombre, propietario.celular, propietario.correo, encryptedPassword, 1], (err, result) => {
                 if (err) {
+                    console.log(err);
                     res.json({
                         ERROR: err
                     });
