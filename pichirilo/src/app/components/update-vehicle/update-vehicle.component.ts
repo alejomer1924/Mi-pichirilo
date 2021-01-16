@@ -19,13 +19,6 @@ export class UpdateVehicleComponent implements OnInit, AfterViewInit {
   reparacion:any; 
   detallessss:string; 
 
-  token = localStorage.getItem('token');
-  headers = new HttpHeaders({
-    'Content-Type': 'application/json', 
-    'Authorization': `Bearer ${this.token}`
-  });
-  
-
   constructor(private _activatedRoute:ActivatedRoute, private _userService:UserService, private _router:Router) { }
 
   ngOnInit(): void {
@@ -35,7 +28,7 @@ export class UpdateVehicleComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit():void{
-    this._userService.getRepair(this.idRep, this.headers).subscribe((data:any)=> {
+    this._userService.getRepair(this.idRep).subscribe((data:any)=> {
       this.reparacion = data.items[0]; 
       console.log(this.reparacion);
       this.detalle.nativeElement.value = data.items[0].detalle; 
@@ -52,7 +45,7 @@ export class UpdateVehicleComponent implements OnInit, AfterViewInit {
       detalle
     }
 
-    this._userService.updateRepair(this.idRep, reparacion,this.headers).subscribe((data) => {
+    this._userService.updateRepair(this.idRep, reparacion).subscribe((data) => {
       console.log(data);
       this._router.navigate(['services/Empleado']);
     })

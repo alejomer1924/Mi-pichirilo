@@ -15,12 +15,12 @@
                                 <input type="password" class="form-control mr-sm-2" (keyup.enter) = 'autenticacion(correo.value, contra.value)' #contra>
                             </div>
                             <div *ngIf='intento'>
-                                <div *ngIf='logeado == true'>
+                                <div *ngIf='flag == true'>
                                     <p class="logeado-exito">
                                         Logeado con exito
                                     </p>
                                 </div>
-                                <div *ngIf='logeado == false'>
+                                <div *ngIf='flag == false'>
                                     <p class="logeado-fracaso">
                                         No se ha encontrado el correo o contraseña 
                                     </p>
