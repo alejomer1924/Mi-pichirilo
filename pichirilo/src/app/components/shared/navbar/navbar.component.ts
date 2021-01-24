@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(private _router: Router, public _userService: UserService) { }
 
-  rol:string 
+  rol: string
   logeado: boolean
 
   ngOnInit(): void {
@@ -19,18 +19,11 @@ export class NavbarComponent implements OnInit {
     console.log(this.logeado);
   }
 
-  toLogin(){
+  toLogin() {
     this._router.navigate(['login']);
   }
 
-  toSignUp(){
+  toSignUp() {
     this._router.navigate(['signUp']);
   }
-
-  toSignOut(){
-    localStorage.removeItem('token');
-    this._userService.verifyAuth();
-    this._router.navigate(['/home']);
-  }
-
 }
