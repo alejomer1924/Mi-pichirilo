@@ -30,8 +30,9 @@ export class LoginComponent implements OnInit {
     this._userService.login(JSON.stringify(usuario)).subscribe((data) => {
       if (data.existe) {
         this.flag = true;
-        this._route.navigate(["services/"+this.rol]);
         localStorage.setItem('token', data.token);
+        this._userService.verifyAuth();
+        this._route.navigate(["services/"+this.rol]);
       }else{
         this.flag = false;
       }

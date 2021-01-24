@@ -1,7 +1,7 @@
 nav{
     font-size: 20px;
     font-style: bold;
-    color: aliceblue;
+    color: black;
     height: 100px;
     padding: 20px;
     display: flex;
@@ -24,7 +24,7 @@ li{
     align-items: center;
 }
 a{
-    color: white;
+    color:black;
 }
 #menusito{
 color: black;
@@ -33,8 +33,8 @@ padding: .7rem 1rem;
 
 #registro{
     border-radius: 5px 5px 30px 5px;
-    background: #F0CE4A;
-    color: white;
+    background: #F8BB00;
+    color: black;
 }
 #menu{   
     display: inline;

@@ -8,9 +8,10 @@ body {
   margin-top: 120px;
   max-width: 600px;
   height: 320px;
-  border: 1px solid #9C9C9C;
-  background-color: #EAEAEA;
+  background-color:#5AA5CF;
+  border-radius: 0 0 30px 0;
 }
+
 #login .container #login-row #login-column #login-box #login-form {
   padding: 20px;
 }
@@ -40,16 +41,17 @@ body {
   margin-top: 120px;
   max-width: 600px;
   height: 380px;
-  border: 1px solid #9C9C9C;
-  background-color: #EAEAEA;
+  background-color:#5AA5CF;
   padding: 20px;
+  border-radius: 0 0 30px 0;
 }
 
 .signupVehicle{
   margin-top: 220px;
   max-width: 600px;
   height: 500px;
-  border: 1px solid #9C9C9C;
+  border: 1px solid blue;
+  background: blue;
   background-color: #EAEAEA;
   padding: 20px;
 }

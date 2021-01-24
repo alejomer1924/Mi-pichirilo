@@ -9,6 +9,7 @@ export class UserService {
 
 
   reparaciones: any[] = [];
+  logeado:boolean;
 
   private api = 'http://localhost:3000/';
   log = 'login';
@@ -19,7 +20,21 @@ export class UserService {
 
 
 
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient) {
+    console.log('Servicios corriendo!!');
+    this.verifyAuth();
+   }
+
+   verifyAuth(){
+      let token = localStorage.getItem('token');
+      if(token){
+        console.log('Hay alguien logeado');
+        this.logeado = true;
+      }else{
+        console.log('No hay nadie logeado');
+        this.logeado = false;
+      }
+    }
 
   createHeader() {
     let header = new HttpHeaders().set('Content-Type', 'application/json');
