@@ -14,6 +14,7 @@ import { ServicesComponent } from './components/services/services.component';
 import { SignupVehicleComponent } from './components/signup-vehicle/signup-vehicle.component';
 import { ListRepairsComponent } from './components/list-repairs/list-repairs.component';
 import { UpdateVehicleComponent } from './components/update-vehicle/update-vehicle.component';
+import { NavInComponent } from './components/shared/nav-in/nav-in.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { UpdateVehicleComponent } from './components/update-vehicle/update-vehic
     ServicesComponent,
     SignupVehicleComponent,
     ListRepairsComponent,
-    UpdateVehicleComponent
+    UpdateVehicleComponent,
+    NavInComponent
   ],
   imports: [
     BrowserModule,

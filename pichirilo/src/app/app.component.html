@@ -1,3 +1,4 @@
-<app-navbar></app-navbar>
+<app-navbar *ngIf="!Userservices.logeado"></app-navbar>
+<app-nav-in *ngIf="Userservices.logeado"></app-nav-in>
 
 <router-outlet></router-outlet>

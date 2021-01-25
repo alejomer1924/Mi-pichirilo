@@ -1,0 +1,45 @@
+nav{
+    font-size: 20px;
+    font-style: bold;
+    color: black;
+    height: 100px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #5AA5CF;
+    border-radius: 0 0 30px 0;
+    align-items: center;
+}
+ul {
+    padding-right: 20px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+li{
+    list-style: none; 
+    padding: 20px;
+    height: 65px;
+    width: 120px;
+    align-items: center;
+}
+a{
+    color:black;
+}
+#menusito{
+color: black;
+padding: .7rem 1rem;
+}
+
+#registro{
+    border-radius: 5px 5px 30px 5px;
+    background: #F8BB00;
+    color: black;
+}
+#menu{   
+    display: inline;
+    justify-content: space-between;
+}
+img{
+    margin-right: 20px;
+}

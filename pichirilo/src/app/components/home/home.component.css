@@ -12,6 +12,7 @@ margin-top: 50px;
 }
 #slogan img{
     width: 500;
+    
 }
 strong{
     color: #F0CE4A;
@@ -41,10 +42,8 @@ background: #4AC47C;
 #c4{
 background: #5AA5CF;
 }
-#c5{
+footer{
+    text-align:center;
     background: #5AA5CF;
-}
-
-#futersito{
-    align-items: center;
+    margin-top: 40px;
 }
