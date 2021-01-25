@@ -19,7 +19,7 @@ export class SignupVehicleComponent implements OnInit {
 
   registrarRep(matricula: string, tipo: string, marca: string, modelo: string,
     color: string, kilometraje: string, descripcion: string,
-    fechaIngr: string, fechaSal: string, motivo: string, detalles: string) {
+    fechaIngr: string, fechaSal: string, motivo: string, detalles: string, idPropietario:string) {
 
     let registroRep = {
       vehiculo: {
@@ -36,6 +36,9 @@ export class SignupVehicleComponent implements OnInit {
         fechaSal,
         motivo,
         detalles
+      },
+      propietario: {
+        id: idPropietario
       }
     }
     console.log(registroRep);
