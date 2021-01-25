@@ -4,13 +4,15 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const pool = require('../db/database');
+const nodemailer = require("nodemailer");
+
 
 
 // DECLARE JWT-secret
 const JWT_Secret = 'sumamentesecreta';
 
-/* router.get('/', (req, res) => {
-    poolConnection.getConnection((err, connection) => {
+router.get('/', (req, res) => {
+    /* poolConnection.getConnection((err, connection) => {
         connection.query('SELECT correo, contrasena FROM blh7gemxzxusiyohygpd.Propietario', (err, rows, fields) => {
             if (!err) {
                 res.json(rows);
@@ -19,8 +21,9 @@ const JWT_Secret = 'sumamentesecreta';
             }
             connection.release();
         });
-    })
-}); */
+    }) */
+    sendEmail('jposadasepulveda@gmail.com, burbano444@gmail.com', 'que viva la arepa');
+});
 
 router.post('/login', (req, res) => {
     poolConnection.getConnection((err, connection) => {
@@ -39,14 +42,14 @@ router.post('/login', (req, res) => {
                 if (usuario.correo === row.correo) {
                     console.log('entra, correo existente');
                     await bcrypt.compare(usuario.contrasena, row.contrasena).then(same => {
-                        if(same === true){
+                        if (same === true) {
                             console.log('entra, contraseña correcta');
                             token = jwt.sign({ id: row.id }, JWT_Secret, { expiresIn: '8h' });
                             existe = true;
                         }
-                    });  
+                    });
                 }
-                if(existe){
+                if (existe) {
                     break;
                 }
             }
@@ -71,10 +74,10 @@ router.post('/login', (req, res) => {
 
 router.post('/agregarPropietario', async (req, res) => {
     let propietario = req.body;
-    let encryptedPassword; 
-    await bcrypt.hash(propietario.contrasena, 10).then((hash)=> {
+    let encryptedPassword;
+    await bcrypt.hash(propietario.contrasena, 10).then((hash) => {
         encryptedPassword = hash;
-    }); 
+    });
 
     /* bcrypt.compare('manu123', encryptedPassword, (err, same) => {
         console.log(same);
@@ -119,10 +122,12 @@ let verifyToken = (req, res, next) => {
 router.post('/registrarRep', verifyToken, async (req, res) => {
     let { vehiculo } = req.body;
     let { reparacion } = req.body;
+    let {propietario} = req.body;
     console.log(vehiculo, reparacion, req.id);
     await addVehicle(vehiculo);
     let idRep = await addRepair(vehiculo.matricula, reparacion);
     await addRepXVeh(idRep, req.id);
+    await addPropXVeh(vehiculo.matricula,propietario.id); 
     console.log('Se debe mostrar después de agregar todo perro');
     res.json({
         mensaje: 'Agregado exitosamente'
@@ -175,6 +180,24 @@ const addRepXVeh = (idRep, idEmpl) => {
                     } else {
                         connection.release();
                         console.log('agregado reparacion x empleado prros')
+                        resolve();
+                    }
+                });
+        });
+    });
+}
+
+const addPropXVeh = (idVeh, idProp) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.getConnection((err, connection) => {
+            connection.query('INSERT INTO blh7gemxzxusiyohygpd.VehiculoXPropietario (veh_matricula, prop_id_propietario) VALUES (?,?)',
+                [idVeh, idProp], (err, results) => {
+                    if (err) {
+                        connection.release();
+                        throw new Error(err);
+                    } else {
+                        connection.release();
+                        console.log('agregado vehiculo x propietario prros')
                         resolve();
                     }
                 });
@@ -259,7 +282,7 @@ router.delete('/eliminarRep/:id/:matr', verifyToken, async (req, res) => {
     let matr = req.params['matr'];
     let id = req.id
     /* console.log(idRep, matr);  */
-    await deleteRXE(idRep, id); 
+    await deleteRXE(idRep, id);
     await deleteRep(idRep);
     await deleteVehicle(matr);
     res.json({
@@ -316,7 +339,29 @@ const deleteVehicle = (matr) => {
     });
 }
 
+const sendEmail = async (email, texto) => {
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'mipichirilo1@gmail.com',
+            pass: 'Ingenieria1.'
+        }
+    });
+    var mailOptions = {
+        from: 'Mi pichirilo SAS',
+        to: email,
+        subject: 'Actualización de tu vehículo',
+        text: texto
+    };
 
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error){
+            console.log(error);
+        } else {
+            console.log("Email sent");
+        }
+    });
+}
 
 module.exports = router;
 
