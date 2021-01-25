@@ -274,16 +274,17 @@ router.put('/reparaciones/:id', verifyToken, (req, res) => {
 });
 
 router.delete('/eliminarRep/:id/:matr', verifyToken, async (req, res) => {
-    res.json({
+    /* res.json({
         params: req.params,
         usuario: req.id
-    })
+    }) */
     let idRep = req.params['id'];
     let matr = req.params['matr'];
     let id = req.id
     /* console.log(idRep, matr);  */
     await deleteRXE(idRep, id);
     await deleteRep(idRep);
+    await deleteVXP(matr);
     await deleteVehicle(matr);
     res.json({
         message: 'eliminado con exito'
@@ -322,6 +323,24 @@ const deleteRep = (idRep) => {
         });
     });
 }
+
+const deleteVXP = (idveh) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.getConnection((err, connection) => {
+            connection.query(`DELETE FROM blh7gemxzxusiyohygpd.VehiculoXPropietario WHERE (veh_matricula = '${idveh}')`, (err, rows) => {
+                if (err) {
+                    connection.release();
+                    throw new Error(err);
+                } else {
+                    connection.release();
+                    console.log('eliminado VXP');
+                    resolve();
+                }
+            });
+        });
+    });
+}
+
 const deleteVehicle = (matr) => {
     return new Promise((resolve, reject) => {
         poolConnection.getConnection((err, connection) => {
