@@ -6,6 +6,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ServicesComponent } from './components/services/services.component';
 import { SignupVehicleComponent } from './components/signup-vehicle/signup-vehicle.component';
 import { UpdateVehicleComponent } from './components/update-vehicle/update-vehicle.component';
+import { WatchRepairComponent } from './components/watch-repair/watch-repair.component';
 
 const routes: Routes = [ 
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: 'services/:rol/UpdateVehicle/:idRep',
     component: UpdateVehicleComponent
+  },
+  {
+    path: 'services/:rol/WatchVehicle/:matricula',
+    component: WatchRepairComponent
   },
   {
     path: '**', 

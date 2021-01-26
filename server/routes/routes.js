@@ -220,9 +220,44 @@ router.get('/usuarios', verifyToken, (req, res) => {
     });
 });
 
-router.get('/reparaciones', verifyToken, (req, res) => {
+router.get('/reparaciones/:rol', verifyToken, (req, res) => {
+    let {rol} = req.params; 
+    console.log(rol); 
+    if(rol == 'Empleado'){
+        poolConnection.getConnection((err, connection) => {
+            connection.query(`SELECT r.id_reparacion, Vehiculo_matricula, fecha_llegada, motivo, est.nombre FROM blh7gemxzxusiyohygpd.Empleado AS e INNER JOIN blh7gemxzxusiyohygpd.ReparacionXEmpleado rxe ON e.id_empleado = rxe.Empleado_id_empleado INNER JOIN blh7gemxzxusiyohygpd.Reparacion AS r ON rxe.Reparacion_id_reparacion = r.id_reparacion INNER JOIN blh7gemxzxusiyohygpd.Estado as est ON r.Estado_id_estado = est.id_estado  WHERE e.id_empleado = ${req.id}`, (err, rows, fields) => {
+                if (!err) {
+                    res.json({
+                        usuario: req.id,
+                        items: rows
+                    });
+                } else {
+                    res.json('Database ERROR', err);
+                }
+                connection.release();
+            });
+        }); 
+    }else{
+        poolConnection.getConnection((err, connection) => {
+            connection.query(`SELECT r.Vehiculo_matricula, r.fecha_llegada, r.motivo, r.detalle, e.nombre, e.correo, e.celular FROM blh7gemxzxusiyohygpd.Propietario AS p INNER JOIN blh7gemxzxusiyohygpd.VehiculoXPropietario AS vxp ON p.id_propietario = vxp.prop_id_propietario INNER JOIN blh7gemxzxusiyohygpd.Vehiculo AS v  ON vxp.veh_matricula = v.matricula INNER JOIN blh7gemxzxusiyohygpd.Reparacion as r ON v.matricula = r.Vehiculo_matricula INNER JOIN blh7gemxzxusiyohygpd.ReparacionXEmpleado AS rxe ON r.id_reparacion = rxe.Reparacion_id_reparacion INNER JOIN blh7gemxzxusiyohygpd.Empleado AS e ON rxe.Empleado_id_empleado = e.id_empleado WHERE p.id_propietario = ${req.id}`, (err, rows, fields) => {
+                if (!err) {
+                    res.json({
+                        usuario: req.id,
+                        items: rows
+                    });
+                } else {
+                    res.json('Database ERROR', err);
+                }
+                connection.release();
+            });
+        }); 
+    }
+});
+
+router.get('/reparacion/:id', verifyToken, (req, res) => {
+    const { id } = req.params;
     poolConnection.getConnection((err, connection) => {
-        connection.query(`SELECT r.id_reparacion, Vehiculo_matricula, fecha_llegada, motivo, est.nombre FROM blh7gemxzxusiyohygpd.Empleado AS e INNER JOIN blh7gemxzxusiyohygpd.ReparacionXEmpleado rxe ON e.id_empleado = rxe.Empleado_id_empleado INNER JOIN blh7gemxzxusiyohygpd.Reparacion AS r ON rxe.Reparacion_id_reparacion = r.id_reparacion INNER JOIN blh7gemxzxusiyohygpd.Estado as est ON r.Estado_id_estado = est.id_estado  WHERE e.id_empleado = ${req.id}`, (err, rows, fields) => {
+        connection.query(`SELECT * from blh7gemxzxusiyohygpd.Reparacion AS r WHERE r.id_reparacion = ${id} `, (err, rows, fields) => {
             if (!err) {
                 res.json({
                     usuario: req.id,
@@ -236,11 +271,12 @@ router.get('/reparaciones', verifyToken, (req, res) => {
     });
 });
 
-router.get('/reparaciones/:id', verifyToken, (req, res) => {
-    const { id } = req.params;
+router.get('/VehXemp/:matr', verifyToken, (req, res) => {
+    const { matr } = req.params;
     poolConnection.getConnection((err, connection) => {
-        connection.query(`SELECT * from blh7gemxzxusiyohygpd.Reparacion AS r WHERE r.id_reparacion = ${id} `, (err, rows, fields) => {
+        connection.query(`SELECT r.Vehiculo_matricula, r.fecha_llegada, r.motivo, r.detalle, e.nombre, e.correo, e.celular FROM blh7gemxzxusiyohygpd.Propietario AS p INNER JOIN blh7gemxzxusiyohygpd.VehiculoXPropietario AS vxp ON p.id_propietario = vxp.prop_id_propietario INNER JOIN blh7gemxzxusiyohygpd.Vehiculo AS v  ON vxp.veh_matricula = v.matricula INNER JOIN blh7gemxzxusiyohygpd.Reparacion as r ON v.matricula = r.Vehiculo_matricula INNER JOIN blh7gemxzxusiyohygpd.ReparacionXEmpleado AS rxe ON r.id_reparacion = rxe.Reparacion_id_reparacion INNER JOIN blh7gemxzxusiyohygpd.Empleado AS e ON rxe.Empleado_id_empleado = e.id_empleado WHERE p.id_propietario = ${req.id} AND v.matricula = '${matr}'`, (err, rows, fields) => {
             if (!err) {
+                console.log(rows);
                 res.json({
                     usuario: req.id,
                     items: rows
@@ -358,7 +394,23 @@ const deleteVehicle = (matr) => {
     });
 }
 
+router.post('/sendEmail/:idRep', verifyToken, async (req, res) => {
+    let { idRep } = req.params;
+    let correo = await getEmailByIdRepair(idRep);
+    let enviado = sendEmail(correo, 'Se notifica que uno de sus vehículos ha sido actualizado en el sistema, por favor inicie sesión para estar al tanto de las novedades');
+   if(enviado){
+       res.json({
+          mensaje: 'Enviado correo exitosamente'
+      }); 
+   }else{
+    res.json({
+        mensaje: 'No se ha podido enviar el correo'
+    }); 
+   }
+});
+
 const sendEmail = async (email, texto) => {
+    let enviado = false; 
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
@@ -378,7 +430,26 @@ const sendEmail = async (email, texto) => {
             console.log(error);
         } else {
             console.log("Email sent");
+            enviado = true; 
         }
+    });
+
+    return enviado; 
+}
+
+const getEmailByIdRepair = (idRep) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.getConnection((err, connection) => {
+            connection.query(`SELECT p.correo FROM blh7gemxzxusiyohygpd.Reparacion AS r INNER JOIN blh7gemxzxusiyohygpd.Vehiculo AS v ON r.Vehiculo_matricula = v.matricula INNER JOIN  blh7gemxzxusiyohygpd.VehiculoXPropietario AS vxp ON v.matricula = vxp.veh_matricula INNER JOIN blh7gemxzxusiyohygpd.Propietario AS p ON vxp.prop_id_propietario = p.id_propietario WHERE r.id_reparacion = ${idRep}`, (err, rows) => {
+                if (err) {
+                    connection.release();
+                    throw new Error(err);
+                } else {
+                    connection.release();
+                    resolve(rows[0].correo);
+                }
+            });
+        });
     });
 }
 

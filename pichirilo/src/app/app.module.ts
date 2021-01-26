@@ -15,6 +15,7 @@ import { SignupVehicleComponent } from './components/signup-vehicle/signup-vehic
 import { ListRepairsComponent } from './components/list-repairs/list-repairs.component';
 import { UpdateVehicleComponent } from './components/update-vehicle/update-vehicle.component';
 import { NavInComponent } from './components/shared/nav-in/nav-in.component';
+import { WatchRepairComponent } from './components/watch-repair/watch-repair.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NavInComponent } from './components/shared/nav-in/nav-in.component';
     SignupVehicleComponent,
     ListRepairsComponent,
     UpdateVehicleComponent,
-    NavInComponent
+    NavInComponent,
+    WatchRepairComponent
   ],
   imports: [
     BrowserModule,

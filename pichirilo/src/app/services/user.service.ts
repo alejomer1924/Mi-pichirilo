@@ -69,13 +69,13 @@ export class UserService {
     return result;
   }
 
-  listRepairs() {
-    this.updateListRepairs();
+  listRepairs(rol:string) {
+    this.updateListRepairs(rol);
   }
 
   getRepair(idRep): Observable<any> {
     let result: Observable<Object>
-    result = this._httpClient.get(this.api + this.listrepairs + `/${idRep}`, { headers: this.createJwtHeader() });
+    result = this._httpClient.get(this.api + 'reparacion' + `/${idRep}`, { headers: this.createJwtHeader() });
     return result;
   }
 
@@ -91,11 +91,23 @@ export class UserService {
     return result;
   }
 
-  updateListRepairs() {
-    this._httpClient.get(this.api + this.listrepairs, { headers: this.createJwtHeader() }).subscribe((data: any) => {
-      this.reparaciones = data.items;
-      /* console.log(this.reparaciones); */
+  updateListRepairs(rol:string) {
+    this._httpClient.get(this.api + this.listrepairs + `/${rol}`, { headers: this.createJwtHeader() }).subscribe((data: any) => {
+       this.reparaciones = data.items; 
+      console.log(this.reparaciones); 
     })
+  }
+
+  getInfoProp(matricula:string){
+    let result: Observable<Object>
+    result =this._httpClient.get(this.api + 'VehXemp' + `/${matricula}`, { headers: this.createJwtHeader() });
+    return result; 
+  }
+
+  sendEmail(idRep:string){
+    let result: Observable<Object>
+    result =this._httpClient.post(this.api + 'sendEmail' + `/${idRep}`, "",{ headers: this.createJwtHeader() });
+    return result; 
   }
 
 
