@@ -47,8 +47,12 @@ export class UpdateVehicleComponent implements OnInit, AfterViewInit {
 
     this._userService.updateRepair(this.idRep, reparacion).subscribe((data) => {
       console.log(data);
+    });
+    
+    this._userService.sendEmail(this.idRep).subscribe((data)=> {
+      console.log(data);
       this._router.navigate(['services/Empleado']);
-    })
+    });
   }
   
 }
